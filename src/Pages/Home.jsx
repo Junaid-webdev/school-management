@@ -10,7 +10,7 @@ import "../Dash.css";
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AccordionDash from '../Components/Accordian';
 import BarChart from '../Chart/BarChart';
-
+import CountUp from 'react-countup';
 
 
 function Home() {
@@ -37,7 +37,7 @@ function Home() {
             </div>
           <Typography gutterBottom variant="h5" component="div">
            
-            $500.00
+            <CountUp delay={0.4} end={8000} duration={0.4} />
           </Typography>
           <Typography gutterBottom variant="body2" component="div" sx={{ color:"#ccd1d1" }}>
             Total Order
@@ -59,7 +59,7 @@ function Home() {
               <ShoppingBagIcon />
             </div>
           <Typography gutterBottom variant='h5' >
-            $900.00
+            $<CountUp delay={0.4} end={12000} duration={0.9} />
           </Typography>
          
           <Typography gutterBottom variant="body2" component="div" sx={{ color:"#ccd1d1" }}>

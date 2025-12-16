@@ -10,7 +10,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -179,8 +179,37 @@ export default function Sidebar({ children }) {
           <Divider sx={{ my: 1 }} />
 
 
+          
+
+
           {/* Analatics */}
 
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              component={Link}
+              to="/products"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ProductionQuantityLimitsIcon />
+              </ListItemIcon>
+
+              <ListItemText
+                primary="Product"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
           <ListItem disablePadding sx={{ display: "block" }}>
             <ListItemButton
               component={Link}

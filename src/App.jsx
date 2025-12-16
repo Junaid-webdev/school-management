@@ -7,6 +7,7 @@ import NavaBar from "./Components/Navabar";
 import Teachers from "./Pages/Teacher";
 import Student from "./Pages/Student";
 import Analytics from "./Pages/Analytics";
+import Productlist from "./Pages/products/productlist";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/setting" element={<Setting />} />
           <Route path="/students" element={<Student />} />
           <Route path="/teachers" element={<Teachers />} />
+          <Route path="/products" element={<Productlist  />} />
         </Routes>
       </Sidebar>
     </>

@@ -3,7 +3,7 @@ import { Chart } from "react-google-charts";
 
 const data = [
   ["Country", "Users"],
-  ["India", 200],
+  ["India", 300],
   ["United States", 300],
   ["Brazil", 400],
   ["Canada", 150],
@@ -13,7 +13,7 @@ const data = [
 
 const options = {
   colorAxis: {
-    colors: ["#b2ebf2", "#006064"], // light → dark
+    colors: ["#b2ebf2", "#006064"], 
   },
   backgroundColor: "#f5f5f5",
   datalessRegionColor: "#e0e0e0",
@@ -22,13 +22,16 @@ const options = {
 
 function GeoChart() {
   return (
+    <div style={{ height:"1900px" }}>
     <Chart
       chartType="GeoChart"
       width="100%"
-      height="400px"
+      height="300px"
       data={data}
       options={options}
+      
     />
+    </div>
   );
 }
 
