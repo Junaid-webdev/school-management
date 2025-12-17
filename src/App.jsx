@@ -7,9 +7,11 @@ import NavaBar from "./Components/Navabar";
 import Teachers from "./Pages/Teacher";
 import Student from "./Pages/Student";
 import Analytics from "./Pages/Analytics";
+
+
 function App() {
   return (
-    <>
+    <>   
       <NavaBar />
       <Sidebar>
         <Routes>
