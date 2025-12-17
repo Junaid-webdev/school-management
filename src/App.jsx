@@ -10,7 +10,7 @@ import Analytics from "./Pages/Analytics";
 import Productlist from "./Pages/products/productlist";
 function App() {
   return (
-    <>
+    <>   
       <NavaBar />
       <Sidebar>
         <Routes>
