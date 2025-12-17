@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Tabs, Tab, Card, CardContent, Typography } from "@mui/material";
 
-import NavaBar from "../Components/NavaBar";
+import NavaBar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import Persnol from "../settings/Persnol";
 import Profile from "../settings/Profile";

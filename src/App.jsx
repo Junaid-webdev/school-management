@@ -3,7 +3,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Setting from "./Pages/Setting";
 import Sidebar from "./Components/Sidebar";
-import NavaBar from "./Components/Navabar";
+import NavaBar from "./Components/Navbar";
 import Teachers from "./Pages/Teacher";
 import Student from "./Pages/Student";
 import Analytics from "./Pages/Analytics";
