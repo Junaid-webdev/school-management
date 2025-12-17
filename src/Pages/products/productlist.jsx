@@ -14,6 +14,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Modal from '@mui/material/Modal';
+import Skeleton from '@mui/material/Skeleton';
 import { db } from "../../firebase-config";
 import {
   collection,
@@ -28,16 +30,41 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import Addform from './AddProduct';
+import Editform from './EditProduct';
+import { useAppStore } from "../../AppStore";
 
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 
 
 function Productlist() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [rows, setRows] = useState([]);
   const empCollectionRef = collection(db, "products");
+  const [open, setOpen] = useState(false);
+  const [formid, setFormid] = useState("");
+  const [editopen, setEditOpen] = useState(false);
+ const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
+
+const handleEditOpen = () => setEditOpen(true);
+const handleEditClose = () => setEditOpen(false);
+
+  const rows = useAppStore((state) => state.rows);
+const setRows = useAppStore((state) => state.setRows);
+
 
   useEffect(() => {
     getUsers();
@@ -67,19 +94,21 @@ function Productlist() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      if (result.value) {
+      if (result.isConfirmed) {
         deleteApi(id);
       }
     });
   };
 
-  
-  const deleteApi = async (id) => {
-    const userDoc = doc(db, "products", id);
-    await deleteDoc(userDoc);
-    Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    getUsers();
-  };
+ const deleteApi = async (id) => {
+  const userDoc = doc(db, "products", id);
+  await deleteDoc(userDoc);
+
+  setRows(rows.filter((row) => row.id !== id));
+
+  Swal.fire("Deleted!", "Product deleted successfully.", "success");
+};
+
 
     const filterData = (v) => {
     if (v) {
@@ -90,8 +119,44 @@ function Productlist() {
     }
   };
 
+  const editData = (id,name,price,category) =>{
+    const data ={
+      id:id,
+      name:name,
+      price:price,
+      category:category,
+    };
+    setFormid(data);
+    handleEditOpen();
+  };
+
 
   return (
+    <div>
+     <div>
+  
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <Addform CloseEvent={handleClose} />
+        </Box>
+      </Modal>
+      <Modal
+        open={editopen}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+        <Editform CloseEvent={handleEditClose} fid={formid} />
+        </Box>
+      </Modal>
+    </div>
+    {rows.length > 0 && (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <Typography
             gutterBottom
@@ -120,7 +185,7 @@ function Productlist() {
               component="div"
               sx={{ flexGrow: 1 }}
             ></Typography>
-            <Button variant="contained" endIcon={<AddCircleIcon />}>
+            <Button onClick={handleOpen} variant="contained" endIcon={<AddCircleIcon />}>
               Add
             </Button>
           </Stack>
@@ -148,51 +213,33 @@ function Productlist() {
                
             </TableRow>
           </TableHead>
+              <TableBody>
+  {rows
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .map((row) => (
+      <TableRow key={row.id} hover tabIndex={-1}>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.price}</TableCell>
+        <TableCell>{row.category}</TableCell>
+        <TableCell>{row.date}</TableCell>
+        <TableCell>
+          <Stack spacing={2} direction="row">
+            <EditIcon
+              sx={{ fontSize: 20, color: "blue", cursor: "pointer" }}
+               onClick={ () =>{
+                editData(row.id,row.name,row.price,row.category)}}
+            />
+            <DeleteIcon
+              sx={{ fontSize: 20, color: "darkred", cursor: "pointer" }}
+               onClick={() => deleteUser(row.id)}
+                       />
+          </Stack>
+        </TableCell>
+      </TableRow>
+    ))}
+</TableBody>
 
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow hover tabIndex={-1}>
-                
-                      <TableCell key={row.id} align="left">
-                       {row.name}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                       {row.price}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                       {row.category}
-                      </TableCell>
-                      <TableCell key={row.id} align="left">
-                       {row.data}
-                      </TableCell>
-                    <TableCell align="left">
-                          <Stack spacing={2} direction="row">
-                            <EditIcon
-                              style={{
-                                fontSize: "20px",
-                                color: "blue",
-                                cursor: "pointer",
-                              }}
-                              className="cursor-pointer"
-                              // onClick={() => editUser(row.id)}
-                            />
-                            <DeleteIcon
-                              style={{
-                                fontSize: "20px",
-                                color: "darkred",
-                                cursor: "pointer",
-                              }}
-                              onClick={() => {
-                                deleteUser(row.id);
-                              }}
-                            />
-                          </Stack>
-                        </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
+         
         </Table>
       </TableContainer>
 
@@ -206,6 +253,28 @@ function Productlist() {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+    )}
+    {rowsPerPage.length == 0 && (
+      <>
+      <Paper sx={{ width: "98%", overflow:"hidden", padding:"12px" }}>
+        <Box height={20} />
+         <Skeleton variant="rectangular" width={"100%"} height={30} />
+         <Box height={40} />
+         <Skeleton variant="rectangular" width={"100%"} height={60} />
+          <Box height={20} />
+          <Skeleton variant="rectangular" width={"100%"} height={60} />
+           <Box height={20} />
+          <Skeleton variant="rectangular" width={"100%"} height={60} />
+          <Box height={20} />
+          <Skeleton variant="rectangular" width={"100%"} height={60} />
+           <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+             <Box height={20} />
+           <Skeleton variant="rectangular" width={"100%"} height={60} />
+      </Paper>
+      </>
+    )}
+   </div>
   );
 }
 

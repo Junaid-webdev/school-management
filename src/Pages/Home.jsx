@@ -17,7 +17,7 @@ function Home() {
   return (
     <>
     <div className="bgcolor">
-         <Box height={80}/>
+         <Box height={10}/>
           <Box sx={{ display:"flex" }}/>
     
         <Grid container spacing={2}>

@@ -18,7 +18,7 @@ const options = {
 function BarChart() {
   return (
     <Chart
-      chartType="ColumnChart"   // 👈 IMPORTANT
+      chartType="ColumnChart"   
       width="100%"
       height="400px"
       data={data}

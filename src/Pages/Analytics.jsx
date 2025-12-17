@@ -15,7 +15,7 @@ import HbarChart from "../Chart/HbarChart";
 function Home() {
   return (
     <div className="bgcolor">
-      <Box height={80} />
+      <Box height={10} />
 
       <Grid container spacing={2}>
         {/* ================= LEFT SECTION ================= */}
