@@ -210,8 +210,8 @@
 /* Add modal close icon */
 .add-close {
   position: absolute;
-  left: 25px;
-  top: 25px;
+  left: 300px;
+  top: 2px;
   font-size: 40px;
   color: #fff;
   cursor: pointer;
@@ -220,6 +220,6 @@
 }
 
 .add-close:hover {
-  opacity: 0.7;
+  opacity: 1.7;
 }
 

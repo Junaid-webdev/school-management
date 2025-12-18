@@ -16,125 +16,121 @@ import CountUp from 'react-countup';
 function Home() {
   return (
     <>
-    <div className="bgcolor">
-         <Box height={10}/>
-          <Box sx={{ display:"flex" }}/>
-    
+      <div className="bgcolor">
+        <Box height={10} />
+        <Box sx={{ display: "flex" }} />
         <Grid container spacing={2}>
-        <Grid size={8}>
-          <Stack spacing={2} direction="row">
-         <Card
-  sx={{ minWidth: "49%", height: 150 }}
-  style={{ background:"rgb(40,38,70)",
-    background: "linear-gradient(158deg, rgba(40,34,70,1) 0%, rgba(30,47,141,1) 100%)",
-    color: "white"
-  }}
->
+          <Grid size={8}>
+            <Stack spacing={2} direction="row">
+              <Card
+                sx={{ minWidth: "49%", height: 150 }}
+                style={{
+                  background: "rgb(40,38,70)",
+                  background: "linear-gradient(158deg, rgba(40,34,70,1) 0%, rgba(30,47,141,1) 100%)",
+                  color: "white"
+                }}
+              >
 
-        <CardContent>
-           <div>
-              <CreditCardIcon />
-            </div>
-          <Typography gutterBottom variant="h5" component="div">
-           
-            <CountUp delay={0.4} end={8000} duration={0.4} />
-          </Typography>
-          <Typography gutterBottom variant="body2" component="div" sx={{ color:"#ccd1d1" }}>
-            Total Order
-          </Typography>
-        
-        </CardContent>
-    </Card>
-    
-      <Card
-  sx={{ minWidth: "49%", height: 150 }}
-  style={{ background:"rgb(53,138,148)",
-    background: "linear-gradient(158deg, rgba(53,138,148,1) 0%, rgba(91,180,196,1) 100%)",
-    color: "white"
-  }}
->
+                <CardContent>
+                  <div>
+                    <CreditCardIcon />
+                  </div>
+                  <Typography gutterBottom variant="h5" component="div">
 
-        <CardContent>
-           <div>
-              <ShoppingBagIcon />
-            </div>
-          <Typography gutterBottom variant='h5' >
-            $<CountUp delay={0.4} end={12000} duration={0.9} />
-          </Typography>
-         
-          <Typography gutterBottom variant="body2" component="div" sx={{ color:"#ccd1d1" }}>
-            Total Earnings
-          </Typography>
-         
-        </CardContent>
-    </Card>
-    </Stack>
-        </Grid>
-        <Grid size={4}>
-        <Stack spacing={2} >
-           <Card style={{
-    background: "linear-gradient(158deg, rgba(40,34,70,1) 0%, rgba(30,47,141,1) 100%)",
-    color: "white"
-  }}
->
+                    <CountUp delay={0.4} end={8000} duration={0.4} />
+                  </Typography>
+                  <Typography gutterBottom variant="body2" component="div" sx={{ color: "#ccd1d1" }}>
+                    Total Order
+                  </Typography>
 
-  
-        
-          <Stack spacing={2} direction="row">
-            <div className="iconstyle">
-               <StorefrontIcon />
-            </div>
-       
-          <div className='paddingAll'>
-           <span className='title'>$205k</span>
-           <br />
-          <span className='subtitle'>Total Income</span>
-          </div>
-          </Stack>
-        
-    </Card>
-           <Card style={{ background:"rgb(53,138,148)",
-    background: "linear-gradient(158deg, rgba(53,138,148,1) 0%, rgba(91,180,196,1) 100%)",
-    color: "white"
-  }}
->
-        
-         <Stack spacing={2} direction="row">
-            <div className="iconstyle">
-               <StorefrontIcon />
-            </div>
-       
-          <div className='paddingAll'>
-           <span className='title'>$205k</span>
-           <br />
-          <span className='subtitle'>Total Income</span>
-          </div>
-          </Stack>
-          
-      
-    </Card>
-        </Stack>
+                </CardContent>
+              </Card>
 
+              <Card
+                sx={{ minWidth: "49%", height: 150 }}
+                style={{
+                  background: "rgb(53,138,148)",
+                  background: "linear-gradient(158deg, rgba(53,138,148,1) 0%, rgba(91,180,196,1) 100%)",
+                  color: "white"
+                }}
+              >
+
+                <CardContent>
+                  <div>
+                    <ShoppingBagIcon />
+                  </div>
+                  <Typography gutterBottom variant='h5' >
+                    $<CountUp delay={0.4} end={12000} duration={0.9} />
+                  </Typography>
+
+                  <Typography gutterBottom variant="body2" component="div" sx={{ color: "#ccd1d1" }}>
+                    Total Earnings
+                  </Typography>
+
+                </CardContent>
+              </Card>
+            </Stack>
+          </Grid>
+          <Grid size={4}>
+            <Stack spacing={2} >
+              <Card style={{
+                background: "linear-gradient(158deg, rgba(40,34,70,1) 0%, rgba(30,47,141,1) 100%)",
+                color: "white"
+              }}
+              >
+                <Stack spacing={2} direction="row">
+                  <div className="iconstyle">
+                    <StorefrontIcon />
+                  </div>
+             <div className='paddingAll'>
+                    <span className='title'>$205k</span>
+                    <br />
+                    <span className='subtitle'>Total Income</span>
+                  </div>
+                </Stack>   
+                </Card>
+              <Card style={{
+                background: "rgb(53,138,148)",
+                background: "linear-gradient(158deg, rgba(53,138,148,1) 0%, rgba(91,180,196,1) 100%)",
+                color: "white"
+              }}
+              >       
+                       <Stack spacing={2} direction="row">
+                  <div className="iconstyle">
+                    <StorefrontIcon />
+                  </div>
+
+                  <div className='paddingAll'>
+                    <span className='title'>$205k</span>
+                    <br />
+                    <span className='subtitle'>Total Income</span>
+                  </div>
+                </Stack>
+
+
+              </Card>
+            </Stack>
+
+          </Grid>
         </Grid>
+        <Box height={20} />
+        <Grid container spacing={2}>
+          <Grid size={8}>
+            <Card sx={{ height: 60 + "vh" }}>
+              <CardContent>
+                <BarChart />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={4}>
+            <Card sx={{ height: 60 + "vh" }}>
+              <CardContent>
+                <AccordionDash />
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-         <Box height={20}/>
-      <Grid container spacing={2}>
-        <Grid size={8}>
-          <Card sx={{ height: 60 + "vh" }}>
-        <CardContent>
-         <BarChart />
-        </CardContent>
-    </Card>
-        </Grid>
-        <Grid size={4}>
-           <Card sx={{ height: 60 + "vh" }}>
-        <CardContent>
-        <AccordionDash />
-        </CardContent>
-    </Card>
-        </Grid>
-        </Grid>
-     </div>
+      </div>
     </>
   );
 }

@@ -1,154 +1,122 @@
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import "./Student.css";
+import React, { useState } from 'react';
+import {
+  Table, Box, TableBody, Typography, Divider,
+  TableCell, TableContainer, TableHead,
+  TableRow, Paper, Stack
+} from '@mui/material';
+import Modal from '@mui/material/Modal';
+import Swal from "sweetalert2";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Addform from './products/AddProduct';
+import Editform from './products/EditProduct';
 
-function Student() {
-  const [selectedStudent, setSelectedStudent] = useState(null);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [studentToDelete, setStudentToDelete] = useState(null);
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
 
-  const students = [
-    { id: 1, name: "Amit Sharma", grade: "10th", age: 15, phone: "9876543210" },
-    { id: 2, name: "Riya Verma", grade: "9th", age: 14, phone: "9876543211" },
-    { id: 3, name: "Karan Singh", grade: "10th", age: 16, phone: "9876543212" },
-    { id: 4, name: "Sneha Khan", grade: "8th", age: 13, phone: "9876543542" },
-  ];
+const students = [
+  { id: 1, name: "John Doe", subject: "Math", class: "IV" },
+  { id: 2, name: "Jane Smith", subject: "Science", class: "VI" },
+  { id: 3, name: "Alice Johnson", subject: "English", class: "VIII" },
+  { id: 4, name: "Bob Brown", subject: "History", class: "XII" },
+];
+
+export default function Student() {
+  const [open, setOpen] = useState(false);
+  const [editopen, setEditOpen] = useState(false);
+  const [formid, setFormid] = useState(null);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleEditClose = () => setEditOpen(false);
+
+  const deleteStudent = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", `Student ${id} deleted`, "success");
+      }
+    });
+  };
+
+  const editData = (id, name, subject, course) => {
+    setFormid({ id, name, subject, course });
+    setEditOpen(true);
+  };
 
   return (
     <>
-      <Box height={30} />
-      <div className="table-container">
-        <div className="table-header">
-          <h1>Student Information</h1>
-          <button className="add-btn" onClick={() => setShowAddModal(true)}>
-            Add Student
-          </button>
-        </div>
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <Addform CloseEvent={handleClose} />
+        </Box>
+      </Modal>
+   <Modal open={editopen} onClose={handleEditClose}>
+  <Box sx={style}>
+    <Editform CloseEvent={handleEditClose} fid={formid} />
+  </Box>
+</Modal>
 
-        <table className="student-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Grade</th>
-              <th>Age</th>
-              <th>Phone</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
+
+      <TableContainer component={Paper}>
+        <Typography variant="h5" sx={{ p: 2 }}>
+          Student Information
+        </Typography>
+        <Divider />
+
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Subject</TableCell>
+              <TableCell>Class</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
             {students.map((student) => (
-              <tr key={student.id}>
-                <td
-                  style={{ cursor: "pointer", color: "blue" }}
-                  onClick={() => setSelectedStudent(student)}
-                >
-                  {student.id}
-                </td>
-                <td>{student.name}</td>
-                <td>{student.grade}</td>
-                <td>{student.age}</td>
-                <td>{student.phone}</td>
-                <td>
-                  <button
-                    className="btn view"
-                    onClick={() => setSelectedStudent(student)}
-                  >
-                    View
-                  </button>
-                  <button className="btn update">Update</button>
-                  <button
-                    className="btn delete"
-                    onClick={() => {
-                      setStudentToDelete(student);
-                      setShowDeleteModal(true);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <TableRow key={student.id}>
+                <TableCell>{student.id}</TableCell>
+                <TableCell>{student.name}</TableCell>
+                <TableCell>{student.subject}</TableCell>
+                <TableCell>{student.class}</TableCell>
+                <TableCell>
+                  <Stack direction="row" spacing={2}>
+                    <EditIcon
+                      sx={{ color: "blue", cursor: "pointer" }}
+                      onClick={() =>
+                        editData(
+                          student.id,
+                          student.name,
+                          student.subject,
+                          student.class
+                        )
+                      }
+                    />
+                    <DeleteIcon
+                      sx={{ color: "darkred", cursor: "pointer" }}
+                      onClick={() => deleteStudent(student.id)}
+                    />
+                  </Stack>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-
-        {/* ADD STUDENT MODAL */}
-        {showAddModal && (
-          <div className="modal-overlay right-modal">
-            <div className="modal">
-              <h2>Add Student</h2>
-              <input type="text" placeholder="Student Name" />
-              <input type="text" placeholder="Grade" />
-              <input type="number" placeholder="Age" />
-              <input type="text" placeholder="Phone" />
-              <div className="modal-actions">
-                <button className="btn update">Save</button>
-                <button
-                  className="btn delete"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* VIEW STUDENT MODAL */}
-        {selectedStudent && (
-          <div className="modal-overlay right-modal">
-            <div className="modal">
-              <h2>Student Details</h2>
-              <p><strong>Name:</strong> {selectedStudent.name}</p>
-              <p><strong>Grade:</strong> {selectedStudent.grade}</p>
-              <p><strong>Age:</strong> {selectedStudent.age}</p>
-              <p><strong>Phone:</strong> {selectedStudent.phone}</p>
-              <div className="modal-actions">
-                <button
-                  className="btn delete"
-                  onClick={() => setSelectedStudent(null)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* DELETE CONFIRM MODAL */}
-        {showDeleteModal && (
-          <div className="modal-overlay center-modal">
-            <div className="modal">
-              <h2>Confirm Delete</h2>
-              <p style={{ textAlign: "center" }}>
-                Are you sure you want to delete <br />
-                <strong>{studentToDelete?.name}</strong>?
-              </p>
-              <div className="modal-actions center-actions">
-                <button
-                  className="btn delete"
-                  onClick={() => {
-                    alert("Deleted Successfully");
-                    setShowDeleteModal(false);
-                    setStudentToDelete(null);
-                  }}
-                >
-                  Yes, Delete
-                </button>
-                <button
-                  className="btn update"
-                  onClick={() => setShowDeleteModal(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }
-
-export default Student;

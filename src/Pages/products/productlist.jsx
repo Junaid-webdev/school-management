@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -30,9 +30,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+
+
+import { useAppStore } from "../../AppStore";
 import Addform from './AddProduct';
 import Editform from './EditProduct';
-import { useAppStore } from "../../AppStore";
 
 
 const style = {
@@ -56,14 +58,14 @@ function Productlist() {
   const [open, setOpen] = useState(false);
   const [formid, setFormid] = useState("");
   const [editopen, setEditOpen] = useState(false);
- const handleOpen = () => setOpen(true);
-const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-const handleEditOpen = () => setEditOpen(true);
-const handleEditClose = () => setEditOpen(false);
+  const handleEditOpen = () => setEditOpen(true);
+  const handleEditClose = () => setEditOpen(false);
 
   const rows = useAppStore((state) => state.rows);
-const setRows = useAppStore((state) => state.setRows);
+  const setRows = useAppStore((state) => state.setRows);
 
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const setRows = useAppStore((state) => state.setRows);
     setPage(0);
   };
 
-   const deleteUser = (id) => {
+  const deleteUser = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -100,31 +102,31 @@ const setRows = useAppStore((state) => state.setRows);
     });
   };
 
- const deleteApi = async (id) => {
-  const userDoc = doc(db, "products", id);
-  await deleteDoc(userDoc);
+  const deleteApi = async (id) => {
+    const userDoc = doc(db, "products", id);
+    await deleteDoc(userDoc);
 
-  setRows(rows.filter((row) => row.id !== id));
+    setRows(rows.filter((row) => row.id !== id));
 
-  Swal.fire("Deleted!", "Product deleted successfully.", "success");
-};
+    Swal.fire("Deleted!", "Product deleted successfully.", "success");
+  };
 
 
-    const filterData = (v) => {
+  const filterData = (v) => {
     if (v) {
       setRows([v]);
     } else {
-           setRows([]);
+      setRows([]);
       getUsers();
     }
   };
 
-  const editData = (id,name,price,category) =>{
-    const data ={
-      id:id,
-      name:name,
-      price:price,
-      category:category,
+  const editData = (id, name, price, category) => {
+    const data = {
+      id: id,
+      name: name,
+      price: price,
+      category: category,
     };
     setFormid(data);
     handleEditOpen();
@@ -133,32 +135,32 @@ const setRows = useAppStore((state) => state.setRows);
 
   return (
     <div>
-     <div>
-  
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        <Addform CloseEvent={handleClose} />
-        </Box>
-      </Modal>
-      <Modal
-        open={editopen}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-        <Editform CloseEvent={handleEditClose} fid={formid} />
-        </Box>
-      </Modal>
-    </div>
-    {rows.length > 0 && (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <Typography
+      <div>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Addform CloseEvent={handleClose} />
+          </Box>
+        </Modal>
+        <Modal
+          open={editopen}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Editform CloseEvent={handleEditClose} fid={formid} />
+          </Box>
+        </Modal>
+      </div>
+      {rows.length > 0 && (
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+          <Typography
             gutterBottom
             variant="h5"
             component="div"
@@ -190,91 +192,92 @@ const setRows = useAppStore((state) => state.setRows);
             </Button>
           </Stack>
           <Box height={10} />
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-             
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Name
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Price
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Category
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Date
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: "100px" }}>
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: "100px" }}>
                     Action
-                </TableCell>
-               
-            </TableRow>
-          </TableHead>
+                  </TableCell>
+
+                </TableRow>
+              </TableHead>
               <TableBody>
-  {rows
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    .map((row) => (
-      <TableRow key={row.id} hover tabIndex={-1}>
-        <TableCell>{row.name}</TableCell>
-        <TableCell>{row.price}</TableCell>
-        <TableCell>{row.category}</TableCell>
-        <TableCell>{row.date}</TableCell>
-        <TableCell>
-          <Stack spacing={2} direction="row">
-            <EditIcon
-              sx={{ fontSize: 20, color: "blue", cursor: "pointer" }}
-               onClick={ () =>{
-                editData(row.id,row.name,row.price,row.category)}}
-            />
-            <DeleteIcon
-              sx={{ fontSize: 20, color: "darkred", cursor: "pointer" }}
-               onClick={() => deleteUser(row.id)}
-                       />
-          </Stack>
-        </TableCell>
-      </TableRow>
-    ))}
-</TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => (
+                    <TableRow key={row.id} hover tabIndex={-1}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.price}</TableCell>
+                      <TableCell>{row.category}</TableCell>
+                      <TableCell>{row.date}</TableCell>
+                      <TableCell>
+                        <Stack spacing={2} direction="row">
+                          <EditIcon
+                            sx={{ fontSize: 20, color: "blue", cursor: "pointer" }}
+                            onClick={() => {
+                              editData(row.id, row.name, row.price, row.category)
+                            }}
+                          />
+                          <DeleteIcon
+                            sx={{ fontSize: 20, color: "darkred", cursor: "pointer" }}
+                            onClick={() => deleteUser(row.id)}
+                          />
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
 
-         
-        </Table>
-      </TableContainer>
 
-      <TablePagination
-        rowsPerPageOptions={[5,10,15]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-    )}
-    {rowsPerPage.length == 0 && (
-      <>
-      <Paper sx={{ width: "98%", overflow:"hidden", padding:"12px" }}>
-        <Box height={20} />
-         <Skeleton variant="rectangular" width={"100%"} height={30} />
-         <Box height={40} />
-         <Skeleton variant="rectangular" width={"100%"} height={60} />
-          <Box height={20} />
-          <Skeleton variant="rectangular" width={"100%"} height={60} />
-           <Box height={20} />
-          <Skeleton variant="rectangular" width={"100%"} height={60} />
-          <Box height={20} />
-          <Skeleton variant="rectangular" width={"100%"} height={60} />
-           <Box height={20} />
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 15]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      )}
+      {rowsPerPage.length == 0 && (
+        <>
+          <Paper sx={{ width: "98%", overflow: "hidden", padding: "12px" }}>
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={30} />
+            <Box height={40} />
             <Skeleton variant="rectangular" width={"100%"} height={60} />
-             <Box height={20} />
-           <Skeleton variant="rectangular" width={"100%"} height={60} />
-      </Paper>
-      </>
-    )}
-   </div>
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+            <Box height={20} />
+            <Skeleton variant="rectangular" width={"100%"} height={60} />
+          </Paper>
+        </>
+      )}
+    </div>
   );
 }
 
