@@ -1,25 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import "./TeacherTable.css";
 
 function Teachers() {
+  const [teachers, setTeachers] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
-
-  // ✅ Delete modal states
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [teacherToDelete, setTeacherToDelete] = useState(null);
-  
-  // update state
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-const [teacherToUpdate, setTeacherToUpdate] = useState(null);
 
-  const teachers = [
-    { id: 1, name: "Mr. Sharma", subject: "Math", experience: 10, phone: "9876543210" },
-    { id: 2, name: "Ms. Verma", subject: "English", experience: 5, phone: "9876543211" },
-    { id: 3, name: "Mr. Singh", subject: "Science", experience: 8, phone: "9876543212" },
-    { id: 4, name: "Mr. Khan", subject: "Hindi", experience: 7, phone: "9876543542" },
-  ];
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/api/list")
+      .then(res => {
+        setTeachers(res.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   return (
     <>

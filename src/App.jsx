@@ -8,26 +8,49 @@ import Teachers from "./Pages/Teacher";
 import Student from "./Pages/Student";
 import Analytics from "./Pages/Analytics";
 import Productlist from "./Pages/products/productlist";
-function App() {
+import Api from "./Api";
+import Login from "./Login";
+import { AuthProvider, useAuth } from "./AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
+
+function AppWrapper() {
+  const { user } = useAuth();
+
+  if (!user) {
+    // Login nahi hai → sirf login page
+    return (
+      <Routes>
+        <Route path="*" element={<Login />} />
+      </Routes>
+    );
+  }
+
+  // Login hai → Navbar + Sidebar + routes
   return (
-    <>   
+    <>
       <NavaBar />
       <Sidebar>
+        <Api />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/students" element={<Student />} />
-          <Route path="/teachers" element={<Teachers />} />
-          <Route path="/products" element={<Productlist  />} />
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+          <Route path="/setting" element={<ProtectedRoute><Setting /></ProtectedRoute>} />
+          <Route path="/students" element={<ProtectedRoute><Student /></ProtectedRoute>} />
+          <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
+          <Route path="/products" element={<ProtectedRoute><Productlist /></ProtectedRoute>} />
         </Routes>
       </Sidebar>
     </>
   );
 }
 
+function App() {
+  return (
+    <AuthProvider>
+      <AppWrapper />
+    </AuthProvider>
+  );
+}
+
 export default App;
-
-
-

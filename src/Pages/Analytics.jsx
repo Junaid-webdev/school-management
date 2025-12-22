@@ -101,7 +101,7 @@ function Home() {
 
         {/* ================= RIGHT TOP ================= */}
         <Grid item xs={6}>
-          <Card sx={{ height: 300, width:470 }}>
+          <Card sx={{ height: 300, width:350 }}>
             <CardContent>
               <HbarChart />
             </CardContent>
@@ -110,7 +110,7 @@ function Home() {
 
         {/* ================= GEO + PIE ================= */}
         <Grid item xs={6}>
-          <Card sx={{ height: 350,width:450 }}>
+          <Card sx={{ height: 350,width:350 }}>
             <CardContent>
               <GeoChart />
             </CardContent>
@@ -118,7 +118,7 @@ function Home() {
         </Grid>
 
         <Grid item xs={6}>
-          <Card sx={{ height: 350,width:400 }}>
+          <Card sx={{ height: 350,width:350 }}>
             <CardContent>
               <PieChart />
             </CardContent>
