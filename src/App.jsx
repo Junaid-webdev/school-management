@@ -12,18 +12,20 @@ import Api from "./Api";
 import Login from "./Login";
 import { AuthProvider, useAuth } from "./AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
+import WhatsAppChat from "./Pages/chat";
+
 
 function AppWrapper() {
   const { user } = useAuth();
 
-  if (!user) {
-    // Login nahi hai → sirf login page
-    return (
-      <Routes>
-        <Route path="*" element={<Login />} />
-      </Routes>
-    );
-  }
+  // if (!user) {
+  //   // Login nahi hai → sirf login page
+  //   return (
+  //     <Routes>
+  //       <Route path="*" element={<Login />} />
+  //     </Routes>
+  //   );
+  // }
 
   // Login hai → Navbar + Sidebar + routes
   return (
@@ -39,6 +41,7 @@ function AppWrapper() {
           <Route path="/students" element={<ProtectedRoute><Student /></ProtectedRoute>} />
           <Route path="/teachers" element={<ProtectedRoute><Teachers /></ProtectedRoute>} />
           <Route path="/products" element={<ProtectedRoute><Productlist /></ProtectedRoute>} />
+          <Route path="/chat" element={<ProtectedRoute><WhatsAppChat /></ProtectedRoute>} />
         </Routes>
       </Sidebar>
     </>

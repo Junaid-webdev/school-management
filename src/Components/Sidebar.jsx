@@ -14,6 +14,7 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Chat, ChatBubble } from "@mui/icons-material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import SchoolIcon from "@mui/icons-material/School";
 import PersonIcon from "@mui/icons-material/Person";
@@ -125,6 +126,32 @@ export default function Sidebar({ children }) {
               />
             </ListItemButton>
           </ListItem>
+          <ListItem disablePadding sx={{ display: "block" }}>
+            <ListItemButton
+              component={Link}
+              to="/chat"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <ChatBubble/>
+              </ListItemIcon>
+              <ListItemText
+                primary="Chat"
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+         
 
           {/* Management */}
           <ListItem disablePadding sx={{ display: "block" }}>
