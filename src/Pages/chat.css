@@ -2,15 +2,15 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, sans-serif; 
-
+  font-family: system-ui, sans-serif;
 }
 
-.wa-container {
-  display:flex;
-  height: 80vh;
 
-  
+.wa-container {
+  display: flex;
+  height: 80vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .wa-sidebar {
@@ -20,7 +20,6 @@
   flex-direction: column;
   border-right: 1px solid #ddd;
 }
-
 
 .sb-header {
   height: 60px;
@@ -32,17 +31,10 @@
   color: white;
 }
 
-.sb-avatar {
-  width: 40px;
-  border-radius: 50%;
-}
-
-.sb-icons span {
+.sb-icons svg {
   margin-left: 15px;
   cursor: pointer;
-  font-size: 18px;
 }
-
 
 .sb-search {
   padding: 8px;
@@ -54,27 +46,28 @@
   padding: 8px 12px;
   border-radius: 8px;
   border: none;
-  outline: none;
 }
-
 
 .sb-chat-list {
   flex: 1;
   overflow-y: auto;
 }
 
-
 .sb-chat {
   display: flex;
   align-items: center;
   padding: 10px;
-  cursor: pointer;
   gap: 10px;
+  cursor: pointer;
 }
 
-.sb-chat:hover,
+.sb-chat:hover {
+  background: #f5f6f6;
+}
+
 .sb-chat.active {
-  background: #f0fef0;
+  background: #f0f2f5;
+  border-left: 4px solid #00a884;
 }
 
 .sb-chat-avatar {
@@ -87,18 +80,18 @@
 }
 
 .sb-chat-name {
-  font-weight: bold;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .sb-chat-last {
   font-size: 12px;
-  color: #666;
+  color: #667781;
 }
 
 .sb-time {
   font-size: 11px;
-  color: #999;
+  color: #667781;
 }
 
 
@@ -111,12 +104,12 @@
 
 .wa-header {
   height: 60px;
-  background: linear-gradient(135deg, #00a884, #008069);
+  background: #00a884;
   display: flex;
   align-items: center;
+  gap: 10px;
   padding: 0 12px;
   color: white;
-  gap: 10px;
 }
 
 .avatar {
@@ -124,10 +117,13 @@
   border-radius: 50%;
 }
 
-.user-info {
-  flex: 1;
+.user-info h4 {
+  font-size: 14px;
 }
 
+.user-info span {
+  font-size: 11px;
+}
 
 .wa-body {
   flex: 1;
@@ -140,6 +136,7 @@
   padding: 8px 12px;
   margin-bottom: 8px;
   border-radius: 8px;
+  font-size: 14px;
 }
 
 .bubble.me {
@@ -151,7 +148,6 @@
   background: #fff;
 }
 
-
 .wa-footer {
   display: flex;
   padding: 8px;
@@ -161,9 +157,10 @@
 .wa-footer input {
   flex: 1;
   height: 40px;
-  border-radius: 25px;
+  border-radius: 20px;
   border: none;
   padding: 0 15px;
+  font-size: 16px;
 }
 
 .wa-footer button {
@@ -174,4 +171,50 @@
   border: none;
   background: #00a884;
   color: white;
+}
+
+
+.wa-placeholder {
+  flex: 1;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #41525d;
+}
+
+
+@media (max-width: 600px) {
+  .wa-container {
+    position: absolute;
+  }
+
+  .wa-sidebar {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    transform: translateX(-100%);
+    transition: 0.3s;
+    z-index: 10;
+  }
+
+  .wa-sidebar.show {
+    transform: translateX(0);
+  }
+
+  .wa-chat.hide {
+    display: none;
+  }
+
+  .bubble {
+    max-width: 90%;
+  }
+}
+
+@media (min-width: 601px) {
+  .back-btn {
+    display: none;
+  }
 }
